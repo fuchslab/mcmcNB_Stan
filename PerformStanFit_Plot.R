@@ -41,6 +41,8 @@ saveRDS(fit_1000_500_2_1000_2_2020_02_25_singlecell3, file= "fit_1000_500_2_1000
 
 # Plot
 library(colourlovers)
+library(gridExtra)
+library(ggplot2)
 palette4 <- clpalette('694737')
 fit_1000_500_2_1000_2_2020_02_25_singlecell3 <- readRDS(file= "fit_1000_500_2_1000_2_2020_02_25_singlecell3.rds")
 
@@ -79,7 +81,7 @@ dens6 <-stan_dens(fit_1000_500_2_1000_2_2020_02_25_singlecell3, pars = "theta[2]
   geom_segment(aes(x = theta[2], y = 0, xend = theta[2], yend = 10, linetype = "True Value"), size = 1)+
   geom_segment(aes(x = b["theta[2]",1], y = 0, xend = b["theta[2]",1], yend = 10, linetype = "Mean"), size = 1) +
   scale_linetype_manual("",values=c("True Value"=1,"Mean"=2))
-Dens_Plot <- gridExtra::grid.arrange(dens1+ theme(plot.title = element_text(size = 13)) ,dens2,dens3,dens4,dens5,dens6, nrow =3) 
+Dens_Plot <- grid.arrange(dens1+ theme(plot.title = element_text(size = 13)) ,dens2,dens3,dens4,dens5,dens6, nrow =3) 
 
 
 rstan_ggtheme_options(legend.position = "none")
@@ -88,5 +90,5 @@ Trace_Plot <- Trace_Plot + theme(plot.title = element_text(size = 13))
 
 
 pdf(paste0("Density_Traces_fit_1000_500_2_1000_2_2020_02_25_singlecell3s.pdf"), width = 12, height = 7)
-gridExtra::grid.arrange(Trace_Plot, Dens_Plot, ncol =2)
+grid.arrange(Trace_Plot, Dens_Plot, ncol =2)
 dev.off()
